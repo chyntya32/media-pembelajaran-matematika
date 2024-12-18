@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Pembelajaran Matematika</title>
+    <style>
+        /* CSS langsung di dalam file HTML */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            margin: 0;
+            display: flex; /* Gunakan Flexbox */
+            justify-content: center; /* Pusatkan secara horizontal */
+            align-items: center; /* Pusatkan secara vertikal */
+            background: url('image.jpg') no-repeat center center/cover; /* Ganti 'image.jpg' dengan URL gambar Anda */
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        h1 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        #question-area, #result {
+            margin: 10px 0;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 10px;
+            font-size: 1em;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Kuis Penjumlahan dan Pengurangan</h1>
+        <div id="question-area">
+            <p id="question">Soal akan muncul di sini</p>
+            <input type="number" id="answer" placeholder="Masukkan jawaban">
+            <button onclick="checkAnswer()">Submit</button>
+        </div>
+        <div id="result">
+            <p id="feedback"></p>
+            <p>Skor: <span id="score">0</span></p>
+        </div>
+        <button onclick="generateQuestion()">Soal Baru</button>
+    </div>
+
+    <script>
+        // JavaScript langsung di dalam file HTML
+        let score = 0;
+        let answerCorrect;
+
+        function generateQuestion() {
+            // Pilih operator (+ atau -)
+            const operator = Math.random() < 0.5 ? '+' : '-';
+            const num1 = Math.floor(Math.random() * 20) + 1; // Angka pertama (1-20)
+            const num2 = Math.floor(Math.random() * 20) + 1; // Angka kedua (1-20)
+
+            // Tentukan soal dan jawaban
+            let question;
+            if (operator === '+') {
+                question = `${num1} + ${num2}`;
+                answerCorrect = num1 + num2;
+            } else {
+                question = `${num1} - ${num2}`;
+                answerCorrect = num1 - num2;
+            }
+
+            // Tampilkan soal di halaman
+            document.getElementById("question").textContent = `Berapa hasil dari: ${question}`;
+            document.getElementById("answer").value = ""; // Kosongkan input jawaban
+            document.getElementById("feedback").textContent = ""; // Kosongkan feedback
+        }
+
+        function checkAnswer() {
+            // Ambil jawaban dari input
+            const userAnswer = parseInt(document.getElementById("answer").value);
+
+            // Cek jawaban pengguna
+            if (userAnswer === answerCorrect) {
+                document.getElementById("feedback").textContent = "Jawaban benar!";
+                score++;
+            } else {
+                document.getElementById("feedback").textContent = `Jawaban salah! Jawaban yang benar adalah ${answerCorrect}.`;
+            }
+
+            // Update skor
+            document.getElementById("score").textContent = score;
+
+            // Tampilkan soal baru secara otomatis
+            generateQuestion();
+        }
+
+        // Memulai soal pertama saat halaman dimuat
+        window.onload = generateQuestion;
+    </script>
+</body>
+</html>
